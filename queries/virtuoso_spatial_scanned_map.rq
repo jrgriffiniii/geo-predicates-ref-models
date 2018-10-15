@@ -1,0 +1,17 @@
+
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX schema: <http://schema.org/>
+SELECT ?resource ?polygon
+FROM <http://institution.edu/georepository#>
+WHERE
+{
+  ?resource schema:spatialCoverage ?fPlace .
+  ?fPlace schema:geo ?fGeom .
+  ?fGeom geo:asWKT ?polygon .
+  FILTER (
+    bif:st_contains (
+      ?polygon,
+      bif:st_geomfromtext ( "POINT(-83.4 34)" )
+    )
+  ) .
+}

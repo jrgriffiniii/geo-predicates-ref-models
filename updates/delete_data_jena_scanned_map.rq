@@ -1,0 +1,24 @@
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX ebucore: <http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#>
+PREFIX myGazetteer: <http://maps.org/gazetteer/>
+PREFIX ogc: <http://www.opengis.net/ont/geosparql#>
+PREFIX pcdm: <http://pcdm.org/models#>
+PREFIX schema: <http://schema.org/>
+PREFIX testRepository: <http://institution.edu/repository/>
+
+DELETE DATA
+{
+  myGazetteer:boundingBox1 a schema:GeoShape ;
+    ogc:asWKT '''Polygon ((-83.4 34.0, -83.1 34.0,-83.1 34.2, -83.4 34.2))'''^^ogc:wktLiteral ;
+    schema:box "-83.4 34.2, -83.1 34.2" .
+
+  myGazetteer:place1 a schema:Place ;
+    schema:name "Example Place 1"@en ;
+    schema:geo  myGazetteer:boundingBox1 .
+
+  testRepository:exampleScannedMap a pcdm:Object, schema:Map ;
+    dcterms:spatial    myGazetteer:place1 ;
+    dcterms:description    "An Example Scanned Map"@en ;
+    schema:spatialCoverage    myGazetteer:place1 ;
+    ebucore:hasMimeType    "image/tiff" .
+}
