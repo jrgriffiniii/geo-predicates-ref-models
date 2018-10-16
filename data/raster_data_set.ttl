@@ -1,0 +1,65 @@
+@prefix crs-epsg: <http://www.opengis.net/def/crs/EPSG/0/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ebucore: <http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix myGazetteer: <http://maps.org/gazetteer/> .
+@prefix ogc: <http://www.opengis.net/ont/geosparql#> .
+@prefix pcdm: <http://pcdm.org/models#> .
+@prefix qb: <http://purl.org/linked-data/cube#> .
+@prefix qb4st: <http://www.w3.org/ns/qb4st/> .
+@prefix schema: <http://schema.org/> .
+@prefix sdmx-concept: <http://purl.org/linked-data/sdmx/2009/concept#> .
+@prefix sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#> .
+@prefix testRepository: <http://institution.edu/repository/> .
+
+# Define the spatial measures
+# This uses a ogc:wktLiteral to define the bounding box of the raster grid cell
+testRepository:refArea a rdf:Property, qb:DimensionProperty ;
+  rdfs:label "geospatial reference area"@en ;
+  rdfs:subPropertyOf sdmx-dimension:refArea ;
+  rdfs:range ogc:wktLiteral ;
+  qb:concept sdmx-concept:refArea .
+
+# Define the quantitive measures
+testRepository:hyraxMeasure a qb:measure .
+
+# Define the dimensions
+testRepository:area a qb4st:SpatialComponentSpecification, qb:ComponentSpecification ;
+  qb:dimension testRepository:refArea .
+
+testRepository:hyraxQuantity a qb:ComponentSpecification ;
+  qb:measure testRepository:hyraxMeasure .
+
+# Define the data structures for data sets
+testRepository:dsd1 a qb:DataStructureDefinition ;
+  rdfs:comment "Observed number of hyraxes within a given raster grid cell"@en ;
+  qb:component    testRepository:area, testRepository:hyraxQuantity .
+
+# Define the spatial resources for georeferencing
+myGazetteer:boundingBox1 a schema:GeoShape ;
+  ogc:asWKT "POLYGON ((30 10, 40 40, 20 40, 10 20, 30 10))"^^ogc:wktLiteral ;
+  schema:box "-83.4 34.2, -83.1 34.2" .
+
+myGazetteer:place1 a schema:Place ;
+  schema:name "Example Place 1"@en ;
+  schema:geo  myGazetteer:boundingBox1 .
+
+# Define the dataset
+testRepository:exampleRasterDataset a pcdm:Object, schema:Dataset, qb:DataSet ;
+  dcterms:spatial    myGazetteer:place1 ;
+  dcterms:description    "An Example Raster Data Set"@en ;
+  schema:spatialCoverage    myGazetteer:place1 ;
+  qb:structure testRepository:dsd1 .
+
+# Define the observations
+testRepository:hyraxPopulationSample1 a qb:Observation ;
+  qb:dataSet testRepository:exampleRasterDatase;
+  qb:measureType testRepository:hyraxQuantity ; # This isn't necessary, but helpful when using inferencing
+  testRepository:area "POLYGON ((30 11, 30 15, 26 15, 26 11, 30 11))"^^ogc:wktLiteral ;
+  testRepository:hyraxQuantity 2.0 .
+
+testRepository:hyraxPopulationSample2 a qb:Observation ;
+  qb:dataSet testRepository:exampleRasterDatase;
+  qb:measureType testRepository:hyraxQuantity ;
+  testRepository:area "POLYGON ((38 39, 38 43, 34 43, 34 39, 38 39))"^^ogc:wktLiteral ;
+  testRepository:hyraxQuantity 0.0 .
