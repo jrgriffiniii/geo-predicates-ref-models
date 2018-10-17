@@ -14,7 +14,7 @@ myGazetteer:place1 a schema:Place ;
   schema:name "Example Place 1"@en ;
   schema:geo  myGazetteer:boundingBox1 .
 
-testRepository:exampleScannedMap a pcdm:Object, schema:Map ;
+testRepository:exampleScannedMap a pcdm:Work, schema:Map ;
   dcterms:spatial    myGazetteer:place1 ;
   dcterms:description    "An Example Scanned Map"@en ;
   schema:spatialCoverage    myGazetteer:place1 ;

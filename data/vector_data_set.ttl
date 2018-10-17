@@ -24,7 +24,8 @@ geo:long a qb4st:CoordMeasure ;
   qb4st:crslabel "WGS84"@en .
 
 # Define the quantitive measures
-testRepository:hyraxMeasure a qb:measure .
+testRepository:hyraxMeasure a rdf:Property, qb:MeasureProperty ;
+  rdfs:range xsd:int .
 
 # Define the data structure dimensions
 testRepository:latitude a qb4st:SpatialComponentSpecification, qb:ComponentSpecification ;
@@ -45,31 +46,31 @@ testRepository:dsd1 a qb:DataStructureDefinition ;
 
 # Define the spatial resources for georeferencing
 myGazetteer:boundingBox1 a schema:GeoShape ;
-  ogc:asWKT "POLYGON ((30 10, 40 40, 20 40, 10 20, 30 10))"^^ogc:wktLiteral ;
-  schema:box "-83.4 34.2, -83.1 34.2" .
+  ogc:asWKT "POLYGON ((10 10, 40 10, 40 40, 10 40, 10 10))"^^ogc:wktLiteral ;
+  schema:box "10,10 40,40" .
 
 myGazetteer:place1 a schema:Place ;
   schema:name "Example Place 1"@en ;
   schema:geo  myGazetteer:boundingBox1 .
 
 # Define the dataset
-testRepository:exampleRasterDataset a pcdm:Object, schema:Dataset, qb:DataSet ;
+testRepository:exampleVectorDataset a pcdm:Work, schema:Dataset, qb:DataSet ;
   dcterms:spatial    myGazetteer:place1 ;
-  dcterms:description    "An Example Raster Data Set"@en ;
+  dcterms:description    "An Example Vector Data Set"@en ;
   schema:spatialCoverage    myGazetteer:place1 ;
   qb:structure testRepository:dsd1 .
 
 # Define the observations
 testRepository:hyraxPopulationSample1 a qb:Observation ;
-  qb:dataSet testRepository:exampleRasterDatase;
+  qb:dataSet testRepository:exampleVectorDataset;
   qb:measureType testRepository:hyraxQuantity ; # This isn't necessary, but helpful when using inferencing
-  testRepository:latitude 30 ;
-  testRepository:longitude 11 ;
-  testRepository:hyraxQuantity 2.0 .
+  testRepository:latitude 30.0 ;
+  testRepository:longitude 11.0 ;
+  testRepository:hyraxQuantity 2 .
 
 testRepository:hyraxPopulationSample2 a qb:Observation ;
-  qb:dataSet testRepository:exampleRasterDatase;
+  qb:dataSet testRepository:exampleVectorDataset;
   qb:measureType testRepository:hyraxQuantity ;
-  testRepository:latitude 38 ;
-  testRepository:longitude 39 ;
-  testRepository:hyraxQuantity 0.0 .
+  testRepository:latitude 38.0 ;
+  testRepository:longitude 39.0 ;
+  testRepository:hyraxQuantity 0 .

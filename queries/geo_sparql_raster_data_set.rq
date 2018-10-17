@@ -6,7 +6,7 @@ PREFIX schema: <http://schema.org/>
 PREFIX sdmx-concept: <http://purl.org/linked-data/sdmx/2009/concept#>
 PREFIX testRepository: <http://institution.edu/repository/>
 
-SELECT ?rasterCell ?hyraxes
+SELECT ?resource ?sample ?rasterCell ?temperature
 WHERE
 {
   ?resource schema:spatialCoverage ?fPlace .
@@ -15,7 +15,6 @@ WHERE
   ?area qb:concept sdmx-concept:refArea .
   ?areaDimension qb:dimension ?area .
   ?sample ?areaDimension ?rasterCell .
-  ?sample qb:measureType ?hyraxMeasure .
-  ?sample ?hyraxMeasure ?hyraxes
-  FILTER (ogcf:sfWithin(?polygon,"POLYGON ((30 5, 50 45, 15 45, 0 15, 30 5))"^^ogc:wktLiteral))
+  ?sample testRepository:temperature ?temperature
+  FILTER (ogcf:sfWithin(?polygon,"POLYGON ((0 0, 50 0, 50 50, 0 50, 0 0))"^^ogc:wktLiteral))
 }

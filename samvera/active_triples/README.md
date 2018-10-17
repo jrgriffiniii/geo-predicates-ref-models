@@ -5,6 +5,22 @@
 ## Models
 
 ### GeoShapes
+```ruby
+class GeoShape
+  include  ActiveTriples::RDFSource
+
+  configure type: ::RDF::URI.new('http://schema.org/GeoShape'), base_uri: 'http://institution.edu/georepository/'
+  # [...]
+  property :geo, predicate: ::RDF::URI.new('http://www.opengis.net/ont/geosparql#asWKT')
+end
+```
+```
+> shape = GeoShape.new
+> shape.geo = RDF::Literal.new("POLYGON ((10 10, 40 10, 40 40, 10 40, 10 10))", datatype: "http://www.opengis.net/ont/geosparql#wktLiteral")
+> puts shape.dump :ntriples
+_:g70334896391740 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/GeoShape> .
+_:g70334896391740 <http://www.opengis.net/ont/geosparql#asWKT> "POLYGON ((10 10, 40 10, 40 40, 10 40, 10 10))"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
+```
 
 ### Places
 ```ruby
@@ -20,16 +36,16 @@ end
 > place = Place.new
 > place.geo = shape
 > puts place.dump :ntriples
-_:g70334930722580 <schema:geo> _:g70334881126520 .
-_:g70334930722580 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <schema:Place> .
-_:g70334881126520 <geo:asWKT> "POLYGON ((30 10, 40 40, 20 40, 10 20, 30 10))"^^<geo:wktLiteral> .
-_:g70334881126520 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <schema:GeoShape> .
+_:g70334881935420 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Place> .
+_:g70334881935420 <http://schema.org/geo> _:g70334896391740 .
+_:g70334896391740 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/GeoShape> .
+_:g70334896391740 <http://www.opengis.net/ont/geosparql#asWKT> "POLYGON ((10 10, 40 10, 40 40, 10 40, 10 10))"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
 ```
 
-### (Linked) Geospatial Works
+### (Linked) Geospatial Work Resources
 ```ruby
 class GeoWork
-  include  ActiveTriples::RDFSource
+  include ActiveTriples::RDFSource
 
   configure type: [::RDF::URI.new('http://pcdm.org/works#Work'), ::RDF::URI.new('http://schema.org/Map')], base_uri: 'http://institution.edu/georepository/'
 
@@ -37,5 +53,14 @@ class GeoWork
 end
 ```
 ```
-
+> linked_geo_work = GeoWork.new
+> linked_geo_work.spatial_coverage = place
+> puts linked_geo_work.dump :ntriples
+_:g70334900080040 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://pcdm.org/works#Work> .
+_:g70334900080040 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Map> .
+_:g70334900080040 <http://schema.org/spatialCoverage> _:g70334881935420 .
+_:g70334881935420 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Place> .
+_:g70334881935420 <http://schema.org/geo> _:g70334896391740 .
+_:g70334896391740 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/GeoShape> .
+_:g70334896391740 <http://www.opengis.net/ont/geosparql#asWKT> "POLYGON ((10 10, 40 10, 40 40, 10 40, 10 10))"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
 ```

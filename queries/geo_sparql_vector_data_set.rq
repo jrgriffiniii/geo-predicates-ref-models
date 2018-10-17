@@ -5,7 +5,7 @@ PREFIX qb: <http://purl.org/linked-data/cube#>
 PREFIX schema: <http://schema.org/>
 PREFIX testRepository: <http://institution.edu/repository/>
 
-SELECT ?lat ?long ?hyraxes
+SELECT ?resource ?sample ?lat ?long  ?hyraxes
 WHERE
 {
   ?resource schema:spatialCoverage ?fPlace .
@@ -17,5 +17,5 @@ WHERE
   ?sample ?longMeasure ?long .
   ?sample qb:measureType ?hyraxMeasure .
   ?sample ?hyraxMeasure ?hyraxes
-  FILTER (ogcf:sfWithin(?polygon,"POLYGON ((30 5, 50 45, 15 45, 0 15, 30 5))"^^ogc:wktLiteral))
+  FILTER (ogcf:sfWithin(?polygon,"POLYGON ((0 0, 50 0, 50 50, 0 50, 0 0))"^^ogc:wktLiteral))
 }

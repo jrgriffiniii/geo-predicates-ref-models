@@ -16,10 +16,8 @@ end
 ```
 ```
 > shape = GeoShape.new
-> shape.geo = RDF::Literal.new("POLYGON ((30 10, 40 40, 20 40, 10 20, 30 10))", datatype:"geo:wktLiteral")
+> shape.geo = RDF::Literal.new("POLYGON ((10 10, 40 10, 40 40, 10 40, 10 10))", datatype: "http://www.opengis.net/ont/geosparql#wktLiteral")
 > puts shape.dump :ntriples
-_:g70334881126520 <geo:asWKT> "POLYGON ((30 10, 40 40, 20 40, 10 20, 30 10))"^^<geo:wktLiteral> .
-_:g70334881126520 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <schema:GeoShape> .
 ```
 
 ### Places
@@ -36,10 +34,6 @@ end
 > place = Place.new
 > place.geo = shape
 > puts place.dump :ntriples
-_:g70334930722580 <schema:geo> _:g70334881126520 .
-_:g70334930722580 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <schema:Place> .
-_:g70334881126520 <geo:asWKT> "POLYGON ((30 10, 40 40, 20 40, 10 20, 30 10))"^^<geo:wktLiteral> .
-_:g70334881126520 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <schema:GeoShape> .
 ```
 
 ### (Linked) Geospatial Works
@@ -66,11 +60,25 @@ end
 > linked_geo_work.save
 > persisted = linked_geo_work.reload
 > persisted.resource.dump :ntriples
-<http://127.0.0.1:8984/rest/.well-known/genid/08/2c/84/21/082c8421-d113-4588-a222-f803458d52bd> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <schema:Place> .
-<http://127.0.0.1:8984/rest/.well-known/genid/08/2c/84/21/082c8421-d113-4588-a222-f803458d52bd> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://fedora.info/definitions/v4/repository#Skolem> .
-[...]
-<http://127.0.0.1:8984/rest/dev/08/61/2n/52/08612n52b> <schema:spatialCoverage> <http://127.0.0.1:8984/rest/.well-known/genid/08/2c/84/21/082c8421-d113-4588-a222-f803458d52bd> .
-[...]
-<http://127.0.0.1:8984/rest/dev/08/61/2n/52/08612n52b> <info:fedora/fedora-system:def/model#hasModel> "GenericGeoWork" .
-<http://127.0.0.1:8984/rest/dev/08/61/2n/52/08612n52b> <http://purl.org/dc/terms/title> "My linked geo. work" .
+<http://127.0.0.1:8984/rest/dev/wd/37/5w/28/wd375w28x> <http://fedora.info/definitions/v4/repository#hasParent> <http://127.0.0.1:8984/rest/dev> .
+<http://127.0.0.1:8984/rest/dev/wd/37/5w/28/wd375w28x> <http://fedora.info/definitions/v4/repository#lastModified> "2018-10-17T00:12:23.082Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://127.0.0.1:8984/rest/dev/wd/37/5w/28/wd375w28x> <http://fedora.info/definitions/v4/repository#lastModifiedBy> "bypassAdmin" .
+<http://127.0.0.1:8984/rest/dev/wd/37/5w/28/wd375w28x> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://fedora.info/definitions/v4/repository#Container> .
+<http://127.0.0.1:8984/rest/dev/wd/37/5w/28/wd375w28x> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Map> .
+<http://127.0.0.1:8984/rest/dev/wd/37/5w/28/wd375w28x> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/ldp#RDFSource> .
+<http://127.0.0.1:8984/rest/dev/wd/37/5w/28/wd375w28x> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://fedora.info/definitions/v4/repository#Resource> .
+<http://127.0.0.1:8984/rest/dev/wd/37/5w/28/wd375w28x> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/ldp#Container> .
+<http://127.0.0.1:8984/rest/dev/wd/37/5w/28/wd375w28x> <http://schema.org/spatialCoverage> <http://127.0.0.1:8984/rest/.well-known/genid/b8/74/21/72/b8742172-e68f-4ae1-879e-ae865819dad9> .
+<http://127.0.0.1:8984/rest/dev/wd/37/5w/28/wd375w28x> <info:fedora/fedora-system:def/model#hasModel> "GenericGeoWork" .
+<http://127.0.0.1:8984/rest/dev/wd/37/5w/28/wd375w28x> <http://purl.org/dc/terms/title> "My linked geo. work" .
+<http://127.0.0.1:8984/rest/dev/wd/37/5w/28/wd375w28x> <http://fedora.info/definitions/v4/repository#writable> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+<http://127.0.0.1:8984/rest/dev/wd/37/5w/28/wd375w28x> <http://fedora.info/definitions/v4/repository#createdBy> "bypassAdmin" .
+<http://127.0.0.1:8984/rest/dev/wd/37/5w/28/wd375w28x> <http://fedora.info/definitions/v4/repository#created> "2018-10-17T00:12:23.082Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://127.0.0.1:8984/rest/dev/wd/37/5w/28/wd375w28x> <http://www.w3.org/ns/auth/acl#accessControl> <http://127.0.0.1:8984/rest/dev/96/77/d6/44/9677d644-eeac-42e1-b98e-857ce28f818a> .
+<http://127.0.0.1:8984/rest/.well-known/genid/b8/74/21/72/b8742172-e68f-4ae1-879e-ae865819dad9> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://fedora.info/definitions/v4/repository#Skolem> .
+<http://127.0.0.1:8984/rest/.well-known/genid/b8/74/21/72/b8742172-e68f-4ae1-879e-ae865819dad9> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Place> .
+<http://127.0.0.1:8984/rest/.well-known/genid/b8/74/21/72/b8742172-e68f-4ae1-879e-ae865819dad9> <http://schema.org/geo> <http://127.0.0.1:8984/rest/.well-known/genid/3c/99/b4/e2/3c99b4e2-5516-4cf4-852a-9f32c51e0e2d> .
+<http://127.0.0.1:8984/rest/.well-known/genid/3c/99/b4/e2/3c99b4e2-5516-4cf4-852a-9f32c51e0e2d> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://fedora.info/definitions/v4/repository#Skolem> .
+<http://127.0.0.1:8984/rest/.well-known/genid/3c/99/b4/e2/3c99b4e2-5516-4cf4-852a-9f32c51e0e2d> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/GeoShape> .
+<http://127.0.0.1:8984/rest/.well-known/genid/3c/99/b4/e2/3c99b4e2-5516-4cf4-852a-9f32c51e0e2d> <http://www.opengis.net/ont/geosparql#asWKT> "POLYGON ((10 10, 40 10, 40 40, 10 40, 10 10))"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
 ```
