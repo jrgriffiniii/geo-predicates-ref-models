@@ -8,14 +8,14 @@ PREFIX testRepository: <http://institution.edu/repository/>
 INSERT DATA
 {
   myGazetteer:boundingBox1 a schema:GeoShape ;
-    geo:asWKT '''<http://www.opengis.net/def/crs/OGC/1.3/CRS84>Polygon ((-83.4 34.0, -83.1 34.0,-83.1 34.2, -83.4 34.2))'''^^geo:wktLiteral ;
-    schema:box "-83.4 34.2, -83.1 34.2" .
+    geo:asWKT "POLYGON ((30 10, 40 40, 20 40, 10 20, 30 10))"^^geo:wktLiteral ;
+    schema:box "30,10 40,40" .
 
   myGazetteer:place1 a schema:Place ;
     schema:name "Example Place 1"@en ;
     schema:geo  myGazetteer:boundingBox1 .
 
-  testRepository:exampleScannedMap a pcdm:Object, schema:Map ;
+  testRepository:exampleScannedMap a pcdm:Work, schema:Map ;
     dcterms:spatial    myGazetteer:place1 ;
     dcterms:description    "An Example Scanned Map"@en ;
     schema:spatialCoverage    myGazetteer:place1 ;
