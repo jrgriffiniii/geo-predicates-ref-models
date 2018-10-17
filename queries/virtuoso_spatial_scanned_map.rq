@@ -1,6 +1,6 @@
-
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX schema: <http://schema.org/>
+
 SELECT ?resource ?polygon
 FROM <http://institution.edu/georepository#>
 WHERE
@@ -11,7 +11,7 @@ WHERE
   FILTER (
     bif:st_contains (
       ?polygon,
-      bif:st_geomfromtext ( "POINT(-83.4 34)" )
+      bif:st_geomfromtext ( "POINT(25 25)" )
     )
   ) .
 }

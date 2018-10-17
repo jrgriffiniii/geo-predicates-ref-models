@@ -8,7 +8,7 @@
 
 myGazetteer:boundingBox1 a schema:GeoShape ;
   geo:asWKT "POLYGON ((30 10, 40 40, 20 40, 10 20, 30 10))"^^geo:wktLiteral ;
-  schema:box "-83.4 34.2, -83.1 34.2" .
+  schema:box "30,10 40,40" .
 
 myGazetteer:place1 a schema:Place ;
   schema:name "Example Place 1"@en ;

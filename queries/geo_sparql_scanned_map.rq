@@ -1,5 +1,5 @@
-PREFIX geo: <http://www.opengis.net/ont/geosparql#>
-PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX ogc: <http://www.opengis.net/ont/geosparql#>
+PREFIX ogcf: <http://www.opengis.net/def/function/geosparql/>
 PREFIX schema: <http://schema.org/>
 
 SELECT ?resource ?polygon
@@ -7,6 +7,6 @@ WHERE
 {
   ?resource schema:spatialCoverage ?fPlace .
   ?fPlace schema:geo ?fGeom .
-  ?fGeom geo:asWKT ?polygon .
-  FILTER (geof:sfWithin(?polygon,"POLYGON ((30 5, 50 45, 15 45, 0 15, 30 5))"^^geo:wktLiteral))
+  ?fGeom ogc:asWKT ?polygon .
+  FILTER (ogcf:sfWithin(?polygon,"POLYGON ((0 0, 50 0, 50 50, 0 50, 0 0))"^^ogc:wktLiteral))
 }

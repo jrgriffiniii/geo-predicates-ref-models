@@ -36,12 +36,12 @@ SQL>
 ## Bulk-loading data
 ```
 $ mkdir tmp
-$ cp [PATH_TO_GIT_REPO]/data/scanned_map.n3 tmp/scanned_map.n3
-$ cat >> tmp/scanned_map.ext.graph
+$ cp [PATH_TO_GIT_REPO]/data/scanned_map.ttl tmp/scanned_map.ttl
+$ cat >> tmp/scanned_map.ttl.graph
 
 http://institution.edu/georepository#
 $ bin/isql 1111
-SQL> ld_dir ('tmp', 'scanned_map.n3', 'http://institution.edu/georepository#');
+SQL> ld_dir ('tmp', 'scanned_map.ttl', 'http://institution.edu/georepository#');
 SQL> rdf_loader_run ();
 ```
 
@@ -89,8 +89,8 @@ WHERE
   ?fGeom geo:asWKT ?polygon .
   FILTER (
     bif:st_contains (
-      bif:st_geomfromtext ( "Polygon ((-85.0 34.0, -83.0 34.0, -83.0 35.0, -85.0 35.0))" ),
-      ?polygon
+	     bif:st_geomfromtext ( "POINT(25 25)" ),
+       ?polygon
     )
   ) .
 }

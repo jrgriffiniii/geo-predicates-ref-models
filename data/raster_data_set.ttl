@@ -22,10 +22,12 @@ testRepository:refArea a rdf:Property, qb:DimensionProperty ;
 
 # Define the quantitive measures
 testRepository:temperatureMeasure a rdf:Property, qb:MeasureProperty ;
+  rdfs:label "quantitative measure for the temperature of an observation" ;  
   rdfs:range xsd:float .
 
 # Define the dimensions
 testRepository:area a qb4st:SpatialComponentSpecification, qb:ComponentSpecification ;
+  rdfs:label "dataset component for the area in which observations were recorded" ;  
   qb:dimension testRepository:refArea .
 
 testRepository:temperature a qb:ComponentSpecification ;
