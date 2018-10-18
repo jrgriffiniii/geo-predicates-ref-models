@@ -100,12 +100,7 @@ WHERE
 *** Error 42000: [Virtuoso Driver][Virtuoso Server]GEO..: for geo contains, only "shape contains point" case is supported in current version
 ```
 
-Using the database connection:
+### Querying over the HTTP using the cURL:
 ```
-
-```
-
-Over the HTTP using the cURL:
-```
-curl -G  --data-urlencode "default-graph-uri=http://institution.edu/georepository#"  --data-urlencode "query@[PATH_TO_GIT_REPO]/queries/virtuoso_spatial_scanned_map.rq" "http://localhost:8890/sparql"
+curl -G  --data-urlencode "default-graph-uri=http://institution.edu/georepository#"  --data-urlencode "query@[PATH_TO_GIT_REPO]/virtuoso/queries/virtuoso_spatial_scanned_map.rq" "http://localhost:8890/sparql"
 ```

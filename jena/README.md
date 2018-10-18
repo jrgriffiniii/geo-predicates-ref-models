@@ -26,15 +26,17 @@ cd /opt/jena/releases/apache-jena-fuseki-3.x.x
 
 ## Insert data using SPARQL UPDATE statements
 ```
-./bin/s-update --service http://localhost:3030/test1/update @[PATH_TO_GIT_REPO]/updates/insert_data_scanned_map.rq
+./bin/s-update --service http://localhost:3030/test1/update @[PATH_TO_GIT_REPO]/jena/updates/insert_data_scanned_map.rq
 ```
 
 ## Querying for the data
 ```
-./bin/s-query --service http://localhost:3030/test1/query @[PATH_TO_GIT_REPO]/queries/jena_spatial_scanned_map.rq --output=xml
+./bin/s-query --service http://localhost:3030/test1/query @[PATH_TO_GIT_REPO]/jena/queries/jena_spatial_scanned_map.rq --output=xml
 ```
 
 ## Delete the data
 ```
-./bin/s-update --service http://localhost:3030/test1/update @[PATH_TO_GIT_REPO]/delete_data_jena_scanned_map.rq
+./bin/s-update --service http://localhost:3030/test1/update @[PATH_TO_GIT_REPO]/jena/delete_data_jena_scanned_map.rq
 ```
+
+*Please freely try the other UPDATE statements in the `[](updates directory)` and spatial queries in the `[](queries directory)` directory*
