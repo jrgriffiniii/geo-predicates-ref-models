@@ -6,7 +6,7 @@ _Examples for integrating Rails data models into applications using the [ActiveT
 ### GeoShapes
 ```ruby
 class GeoShape
-  include  ActiveTriples::RDFSource
+  include ActiveTriples::RDFSource
 
   configure type: ::RDF::URI.new('http://schema.org/GeoShape'), base_uri: 'http://institution.edu/georepository/'
   # [...]
@@ -43,7 +43,7 @@ _:g70334896391740 <http://www.opengis.net/ont/geosparql#asWKT> "POLYGON ((10 10,
 
 ### (Linked) Geospatial Work Resources
 ```ruby
-class GeoWork
+class ScannedMap
   include ActiveTriples::RDFSource
 
   configure type: [::RDF::URI.new('http://pcdm.org/works#Work'), ::RDF::URI.new('http://schema.org/Map')], base_uri: 'http://institution.edu/georepository/'
@@ -52,7 +52,7 @@ class GeoWork
 end
 ```
 ```
-> linked_geo_work = GeoWork.new
+> linked_geo_work = ScannedMap.new
 > linked_geo_work.spatial_coverage = place
 > puts linked_geo_work.dump :ntriples
 _:g70334900080040 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://pcdm.org/works#Work> .
