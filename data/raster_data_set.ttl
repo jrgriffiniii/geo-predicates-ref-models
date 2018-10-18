@@ -7,10 +7,13 @@
 @prefix pcdm: <http://pcdm.org/models#> .
 @prefix qb: <http://purl.org/linked-data/cube#> .
 @prefix qb4st: <http://www.w3.org/ns/qb4st/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <http://schema.org/> .
 @prefix sdmx-concept: <http://purl.org/linked-data/sdmx/2009/concept#> .
 @prefix sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#> .
 @prefix testRepository: <http://institution.edu/repository/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 # Define the spatial measures
 # This uses a ogc:wktLiteral to define the bounding box of the raster grid cell
@@ -22,12 +25,12 @@ testRepository:refArea a rdf:Property, qb:DimensionProperty ;
 
 # Define the quantitive measures
 testRepository:temperatureMeasure a rdf:Property, qb:MeasureProperty ;
-  rdfs:label "quantitative measure for the temperature of an observation" ;  
+  rdfs:label "quantitative measure for the temperature of an observation" ;
   rdfs:range xsd:float .
 
 # Define the dimensions
 testRepository:area a qb4st:SpatialComponentSpecification, qb:ComponentSpecification ;
-  rdfs:label "dataset component for the area in which observations were recorded" ;  
+  rdfs:label "dataset component for the area in which observations were recorded" ;
   qb:dimension testRepository:refArea .
 
 testRepository:temperature a qb:ComponentSpecification ;

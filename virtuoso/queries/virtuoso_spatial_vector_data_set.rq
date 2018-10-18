@@ -1,0 +1,26 @@
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX ogc: <http://www.opengis.net/ont/geosparql#>
+PREFIX ogcf: <http://www.opengis.net/def/function/geosparql/>
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX schema: <http://schema.org/>
+PREFIX testRepository: <http://institution.edu/repository/>
+
+SELECT ?resource ?sample ?lat ?long  ?hyraxes
+WHERE
+{
+  ?resource schema:spatialCoverage ?fPlace .
+  ?fPlace schema:geo ?fGeom .
+  ?fGeom ogc:asWKT ?polygon .
+  ?latMeasure qb:measure geo:lat .
+  ?longMeasure qb:measure geo:long .
+  ?sample ?latMeasure ?lat .
+  ?sample ?longMeasure ?long .
+  ?sample qb:measureType ?hyraxMeasure .
+  ?sample ?hyraxMeasure ?hyraxes .
+  FILTER (
+    bif:st_contains (
+      ?polygon,
+      bif:st_geomfromtext ( "POINT(25 25)" )
+    )
+  ) .
+}

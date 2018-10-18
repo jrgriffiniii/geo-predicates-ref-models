@@ -7,10 +7,13 @@
 @prefix pcdm: <http://pcdm.org/models#> .
 @prefix qb: <http://purl.org/linked-data/cube#> .
 @prefix qb4st: <http://www.w3.org/ns/qb4st/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <http://schema.org/> .
 @prefix sdmx-concept: <http://purl.org/linked-data/sdmx/2009/concept#> .
 @prefix sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#> .
 @prefix testRepository: <http://institution.edu/repository/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 # Define the spatial measures
 geo:lat a qb4st:CoordMeasure ;

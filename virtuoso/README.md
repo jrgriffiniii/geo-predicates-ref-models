@@ -101,16 +101,40 @@ WHERE
 ```
 
 ### Inserting data
+#### Scanned Maps
 ```
 curl --digest --user dba:dba --verbose --url "http://localhost:8890/sparql-graph-crud-auth?graph-uri=http://institution.edu/georepository/" -T [PATH_TO_GIT_REPO]/data/scanned_map.ttl
 ```
 
+#### Raster Data Sets
+```
+curl --digest --user dba:dba --verbose --url "http://localhost:8890/sparql-graph-crud-auth?graph-uri=http://institution.edu/georepository/" -T [PATH_TO_GIT_REPO]/data/raster_data_set.ttl
+```
+
+#### Vector Data Sets
+```
+curl --digest --user dba:dba --verbose --url "http://localhost:8890/sparql-graph-crud-auth?graph-uri=http://institution.edu/georepository/" -T [PATH_TO_GIT_REPO]/data/vector_data_set.ttl
+```
+
 ### Querying for data over the HTTP using the cURL:
+#### Scanned Maps
 ```
 curl -G  --data-urlencode "default-graph-uri=http://institution.edu/georepository/scanned_map.ttl"  --data-urlencode "query@[PATH_TO_GIT_REPO]/virtuoso/queries/virtuoso_spatial_scanned_map.rq" "http://localhost:8890/sparql"
+```
+
+#### Raster Data Sets
+```
+curl -G  --data-urlencode "default-graph-uri=http://institution.edu/georepository/raster_data_set.ttl" --data-urlencode "query@[PATH_TO_GIT_REPO]/virtuoso/queries/virtuoso_spatial_raster_data_set.rq" http://localhost:8890/sparql
+```
+
+#### Vector Data Sets
+```
+curl -G  --data-urlencode "default-graph-uri=http://institution.edu/georepository/vector_data_set.ttl" --data-urlencode "query@[PATH_TO_GIT_REPO]/virtuoso/queries/virtuoso_spatial_vector_data_set.rq" http://localhost:8890/sparql
 ```
 
 ### Deleting data
 ```
 curl --digest --user dba:dba --verbose --url "http://localhost:8890/sparql-graph-crud-auth?graph-uri=http://institution.edu/georepository/scanned_map.ttl" -X DELETE
+curl --digest --user dba:dba --verbose --url "http://localhost:8890/sparql-graph-crud-auth?graph-uri=http://institution.edu/georepository/raster_data_set.ttl" -X DELETE
+curl --digest --user dba:dba --verbose --url "http://localhost:8890/sparql-graph-crud-auth?graph-uri=http://institution.edu/georepository/vector_data_set.ttl" -X DELETE
 ```
