@@ -39,4 +39,4 @@ cd /opt/jena/releases/apache-jena-fuseki-3.x.x
 ./bin/s-update --service http://localhost:3030/test1/update @[PATH_TO_GIT_REPO]/jena/delete_data_jena_scanned_map.rq
 ```
 
-*Please freely try the other UPDATE statements in the [updates directory](https://github.com/jrgriffiniii/geo-predicates-test/tree/master/jena/updates) and spatial queries in the [queries directory](https://github.com/jrgriffiniii/geo-predicates-test/tree/master/jena/queries) directory*
+*Please freely try the other UPDATE statements in the [updates directory](https://github.com/jrgriffiniii/geo-predicates-ref-models/tree/master/jena/updates) and spatial queries in the [queries directory](https://github.com/jrgriffiniii/geo-predicates-ref-models/tree/master/jena/queries) directory*
