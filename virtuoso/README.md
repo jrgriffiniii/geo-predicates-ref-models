@@ -41,7 +41,7 @@ $ cat >> tmp/scanned_map.ttl.graph
 
 http://institution.edu/georepository#
 $ bin/isql 1111
-SQL> ld_dir ('tmp', 'scanned_map.ttl', 'http://institution.edu/georepository#');
+SQL> ld_dir ('tmp', 'scanned_map.ttl', 'http://institution.edu/georepository/');
 SQL> rdf_loader_run ();
 ```
 
@@ -50,7 +50,7 @@ The following should generate the URIs for the triples which have been persisted
 ```
 SQL> SPARQL
 SELECT *
-FROM <http://institution.edu/georepository#>
+FROM <http://institution.edu/georepository/>
 WHERE
   {
     ?s ?p ?o
@@ -81,7 +81,7 @@ Further, many of these functions are not mature enough to support more complex s
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX schema: <http://schema.org/>
 SELECT ?resource ?polygon
-FROM <http://institution.edu/georepository#>
+FROM <http://institution.edu/georepository/>
 WHERE
 {
   ?resource schema:spatialCoverage ?fPlace .
@@ -89,7 +89,7 @@ WHERE
   ?fGeom geo:asWKT ?polygon .
   FILTER (
     bif:st_contains (
-	     bif:st_geomfromtext ( "POINT(25 25)" ),
+	     bif:st_geomfromtext ( "POLYGON ((0 0, 50 0, 50 50, 0 50, 0 0))" ),
        ?polygon
     )
   ) .
@@ -100,7 +100,17 @@ WHERE
 *** Error 42000: [Virtuoso Driver][Virtuoso Server]GEO..: for geo contains, only "shape contains point" case is supported in current version
 ```
 
-### Querying over the HTTP using the cURL:
+### Inserting data
 ```
-curl -G  --data-urlencode "default-graph-uri=http://institution.edu/georepository#"  --data-urlencode "query@[PATH_TO_GIT_REPO]/virtuoso/queries/virtuoso_spatial_scanned_map.rq" "http://localhost:8890/sparql"
+curl --digest --user dba:dba --verbose --url "http://localhost:8890/sparql-graph-crud-auth?graph-uri=http://institution.edu/georepository/" -T [PATH_TO_GIT_REPO]/data/scanned_map.ttl
+```
+
+### Querying for data over the HTTP using the cURL:
+```
+curl -G  --data-urlencode "default-graph-uri=http://institution.edu/georepository/scanned_map.ttl"  --data-urlencode "query@[PATH_TO_GIT_REPO]/virtuoso/queries/virtuoso_spatial_scanned_map.rq" "http://localhost:8890/sparql"
+```
+
+### Deleting data
+```
+curl --digest --user dba:dba --verbose --url "http://localhost:8890/sparql-graph-crud-auth?graph-uri=http://institution.edu/georepository/scanned_map.ttl" -X DELETE
 ```

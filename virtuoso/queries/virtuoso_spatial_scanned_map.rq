@@ -2,7 +2,6 @@ PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX schema: <http://schema.org/>
 
 SELECT ?resource ?polygon
-FROM <http://institution.edu/georepository#>
 WHERE
 {
   ?resource schema:spatialCoverage ?fPlace .
