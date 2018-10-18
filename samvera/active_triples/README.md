@@ -1,6 +1,5 @@
 # ActiveTriples
-
-## Examples for integrating Rails models into Samvera repositories using the ActiveTriples Gem
+_Examples for integrating Rails data models into applications using the [ActiveTriples](https://github.com/ActiveTriples/ActiveTriples) Gem.  ActiveTriples persists resources into any number of RDF graphs stores using [RDF::Repository](https://www.rubydoc.info/github/ruby-rdf/rdf/RDF/Repository).  Please see [the documentation](https://github.com/ActiveTriples/ActiveTriples#repositories-and-persistence) for further information._
 
 ## Models
 
