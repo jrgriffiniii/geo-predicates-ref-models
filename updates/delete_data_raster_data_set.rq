@@ -1,0 +1,74 @@
+PREFIX crs-epsg: <http://www.opengis.net/def/crs/EPSG/0/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX ebucore: <http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#>
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX myGazetteer: <http://maps.org/gazetteer/>
+PREFIX ogc: <http://www.opengis.net/ont/geosparql#>
+PREFIX pcdm: <http://pcdm.org/models#>
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX qb4st: <http://www.w3.org/ns/qb4st/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <http://schema.org/>
+PREFIX sdmx-concept: <http://purl.org/linked-data/sdmx/2009/concept#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX testRepository: <http://institution.edu/repository/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+DELETE DATA
+{
+  # Define the spatial measures
+  # This uses a ogc:wktLiteral to define the bounding box of the raster grid cell
+  testRepository:refArea a rdf:Property, qb:DimensionProperty ;
+    rdfs:label "geospatial reference area"@en ;
+    rdfs:subPropertyOf sdmx-dimension:refArea ;
+    rdfs:range ogc:wktLiteral ;
+    qb:concept sdmx-concept:refArea .
+
+  # Define the quantitive measures
+  testRepository:temperatureMeasure a rdf:Property, qb:MeasureProperty ;
+    rdfs:label "quantitative measure for the temperature of an observation" ;
+    rdfs:range xsd:float .
+
+  # Define the dimensions
+  testRepository:area a qb4st:SpatialComponentSpecification, qb:ComponentSpecification ;
+    rdfs:label "dataset component for the area in which observations were recorded" ;
+    qb:dimension testRepository:refArea .
+
+  testRepository:temperature a qb:ComponentSpecification ;
+    qb:measure testRepository:temperatureMeasure .
+
+  # Define the data structures for data sets
+  testRepository:dsd1 a qb:DataStructureDefinition ;
+    rdfs:comment "Measured temperature within a given raster grid cell"@en ;
+    qb:component    testRepository:area, testRepository:temperature .
+
+  # Define the spatial resources for georeferencing
+  myGazetteer:shape1 a schema:GeoShape ;
+    ogc:asWKT "POLYGON ((10 10, 40 10, 40 40, 10 40, 10 10))"^^ogc:wktLiteral ;
+    schema:box "10,10 40,40" .
+
+  myGazetteer:place1 a schema:Place ;
+    schema:name "Example Place 1"@en ;
+    schema:geo  myGazetteer:shape1 .
+
+  # Define the dataset
+  testRepository:exampleRasterDataset a pcdm:Work, schema:Dataset, qb:DataSet ;
+    dcterms:spatial    myGazetteer:place1 ;
+    dcterms:description    "An Example Raster Data Set"@en ;
+    schema:spatialCoverage    myGazetteer:place1 ;
+    qb:structure testRepository:dsd1 .
+
+  # Define the observations
+  testRepository:temperatureSample1 a qb:Observation ;
+    qb:dataSet testRepository:exampleRasterDataset;
+    qb:measureType testRepository:temperature ; # This isn't necessary, but helpful when using inferencing
+    testRepository:area "POLYGON ((10 20, 10 30, 20 30, 20 20, 10 20))"^^ogc:wktLiteral ;
+    testRepository:temperature 22.0 .
+
+  testRepository:temperatureSample2 a qb:Observation ;
+    qb:dataSet testRepository:exampleRasterDatase;
+    qb:measureType testRepository:temperature ;
+    testRepository:area "POLYGON ((30 30, 30 40, 40 40, 40 30, 30 40))"^^ogc:wktLiteral ;
+    testRepository:temperature 65.4 .
+}

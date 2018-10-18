@@ -1,0 +1,82 @@
+PREFIX crs-epsg: <http://www.opengis.net/def/crs/EPSG/0/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX ebucore: <http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#>
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX myGazetteer: <http://maps.org/gazetteer/>
+PREFIX ogc: <http://www.opengis.net/ont/geosparql#>
+PREFIX pcdm: <http://pcdm.org/models#>
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX qb4st: <http://www.w3.org/ns/qb4st/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <http://schema.org/>
+PREFIX sdmx-concept: <http://purl.org/linked-data/sdmx/2009/concept#>
+PREFIX sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX testRepository: <http://institution.edu/repository/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+DELETE DATA
+{
+  # Define the spatial measures
+  geo:lat a qb4st:CoordMeasure ;
+    qb4st:crs    crs-epsg:4326 ;
+    qb4st:crsaxis    "latitude"@en ;
+    qb4st:crslabel "WGS84"@en .
+
+  geo:long a qb4st:CoordMeasure ;
+    qb4st:crs crs-epsg:4326 ;
+    qb4st:crsaxis "longitude"@en ;
+    qb4st:crslabel "WGS84"@en .
+
+  # Define the quantitive measures
+  testRepository:hyraxMeasure a rdf:Property, qb:MeasureProperty ;
+    rdfs:range xsd:int .
+
+  # Define the data structure dimensions
+  testRepository:latitude a qb4st:SpatialComponentSpecification, qb:ComponentSpecification ;
+    qb:measure geo:lat ;
+    qb4st:resolution 0.001 .
+
+  testRepository:longitude a qb4st:SpatialComponentSpecification, qb:ComponentSpecification ;
+    qb:measure geo:long ;
+    qb4st:resolution 0.001 .
+
+  testRepository:hyraxQuantity a qb:ComponentSpecification ;
+    qb:measure testRepository:hyraxMeasure .
+
+  # Define the data structures for data sets
+  testRepository:dsd1 a qb:DataStructureDefinition ;
+    rdfs:comment "Observed number of hyraxes within a given raster grid cell"@en ;
+    qb:component    testRepository:latitude, testRepository:longitude, testRepository:hyraxQuantity .
+
+  # Define the spatial resources for georeferencing
+  myGazetteer:boundingBox1 a schema:GeoShape ;
+    ogc:asWKT "POLYGON ((10 10, 40 10, 40 40, 10 40, 10 10))"^^ogc:wktLiteral ;
+    schema:box "10,10 40,40" .
+
+  myGazetteer:place1 a schema:Place ;
+    schema:name "Example Place 1"@en ;
+    schema:geo  myGazetteer:boundingBox1 .
+
+  # Define the dataset
+  testRepository:exampleVectorDataset a pcdm:Work, schema:Dataset, qb:DataSet ;
+    dcterms:spatial    myGazetteer:place1 ;
+    dcterms:description    "An Example Vector Data Set"@en ;
+    schema:spatialCoverage    myGazetteer:place1 ;
+    qb:structure testRepository:dsd1 .
+
+  # Define the observations
+  testRepository:hyraxPopulationSample1 a qb:Observation ;
+    qb:dataSet testRepository:exampleVectorDataset;
+    qb:measureType testRepository:hyraxQuantity ; # This isn't necessary, but helpful when using inferencing
+    testRepository:latitude 30.0 ;
+    testRepository:longitude 11.0 ;
+    testRepository:hyraxQuantity 2 .
+
+  testRepository:hyraxPopulationSample2 a qb:Observation ;
+    qb:dataSet testRepository:exampleVectorDataset;
+    qb:measureType testRepository:hyraxQuantity ;
+    testRepository:latitude 38.0 ;
+    testRepository:longitude 39.0 ;
+    testRepository:hyraxQuantity 0 .
+}
