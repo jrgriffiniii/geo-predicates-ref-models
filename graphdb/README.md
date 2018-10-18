@@ -33,4 +33,4 @@ WHERE
   FILTER (ogcf:sfWithin(?polygon,"POLYGON ((0 0, 50 0, 50 50, 0 50, 0 0))"^^ogc:wktLiteral))
 }
 ```
-*Please freely try the other GeoSPARQL queries in the `[](queries directory)` directory*
+*Please freely try the other GeoSPARQL queries in the [queries directory](https://github.com/jrgriffiniii/geo-predicates-test/tree/master/graphdb/queries) directory*
